@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nfc_card/auth/screens/Login.dart';
+import 'package:nfc_card/auth/screens/Username.dart';
+import 'package:nfc_card/profile/Edit_profile.dart';
+import 'package:nfc_card/profile/Profile.dart';
+
+import 'auth/screens/Otp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +22,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: Edit_profile(),
     );
   }
 }
