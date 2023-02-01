@@ -36,65 +36,78 @@ class _OtpState extends State<Otp> {
             child: Column(
 
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20),
-                  child: Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 50,
+                ),
+                Align(alignment: Alignment.centerLeft,
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.arrow_back_ios_new,color: Colors.white,),
+                    ),
                   ),
                 ),
-                SizedBox(height: 40),
+
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 7,
+                ),
                 Center(
                   child: Text(
                     "Enter your 4-digit code",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w100),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height / 17,),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 9,
+                ),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.only(left: MediaQuery.of(context).size.width /6, right:MediaQuery.of(context).size.width /6),
-                    child: PinCodeTextField(
-                      autoFocus: true, keyboardType: TextInputType.number,
-                      length: 4,
-                      obscureText: false,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: 50,
-                        fieldWidth: 40,
-                        activeFillColor: Colors.white,
-                        inactiveColor: Colors.white,
-                        disabledColor: Colors.white,
-                        selectedColor: Colors.white,
-                        selectedFillColor: Colors.white,
-                        inactiveFillColor: Colors.white,
-                      ),
-                      animationDuration: Duration(milliseconds: 300),
+                    child: Container(width: 250,
+                      child: PinCodeTextField(
+                        autoFocus: true, keyboardType: TextInputType.number,
+                        length: 4,
+                        obscureText: false,
+                        animationType: AnimationType.fade,
+                        pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(5),
+                          fieldHeight: 50,
+                          fieldWidth: 40,
+                          activeFillColor: Colors.white,
+                          inactiveColor: Colors.white,
+                          disabledColor: Colors.white,
+                          selectedColor: Colors.white,
+                          selectedFillColor: Colors.white,
+                          inactiveFillColor: Colors.white,
+                        ),
+                        animationDuration: Duration(milliseconds: 300),
 
-                      enableActiveFill: true,
-                      // errorAnimationController: errorController,
-                      // controller: textEditingController,
-                      onCompleted: (v) {
-                        print("Completed");
-                      },
-                      onChanged: (value) {
-                        print(value);
-                        setState(() {
-                          // currentText = value;
-                        });
-                      },
-                      beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
-                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                        return true;
-                      },
-                      appContext: context,
+                        enableActiveFill: true,
+                        // errorAnimationController: errorController,
+                        // controller: textEditingController,
+                        onCompleted: (v) {
+                          print("Completed");
+                        },
+                        onChanged: (value) {
+                          print(value);
+                          setState(() {
+                            // currentText = value;
+                          });
+                        },
+                        beforeTextPaste: (text) {
+                          print("Allowing to paste $text");
+                          //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                          //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                          return true;
+                        },
+                        appContext: context,
+                      ),
                     ),
                   ),
                 ),
@@ -110,7 +123,7 @@ class _OtpState extends State<Otp> {
                 //   ),
                 // ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 3.5,
+                  height: MediaQuery.of(context).size.height / 9,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
