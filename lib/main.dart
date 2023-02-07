@@ -8,7 +8,7 @@ import 'package:nfc_card/profile/Profile.dart';
 import 'auth/screens/Otp.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,13 +17,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("main ahne");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
 
         primarySwatch: Colors.blue,
       ),
-      home: Edit_profile(),
+      home:Edit_profile(),
     );
   }
 }

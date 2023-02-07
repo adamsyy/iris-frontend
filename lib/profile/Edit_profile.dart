@@ -1,8 +1,40 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nfc_card/constants.dart';
+import 'package:nfc_card/profile/Profile.dart';
 
 String tester = "test";
+
+String firstname = "k9";
+String lastname = "k9";
+String company = "k9";
+String jobtitle = "k9";
+String Address1 = "k9";
+String Address2 = "null";
+String city = "k9";
+String email = "k9";
+String phone = "k9";
+String email2 = "null";
+String phone2 = "null";
+String state = "k9";
+String country = "k9";
+String zipcode = "k9";
+String location = "k9";
+
+String linkedinlink = "null";
+String twitterlink = "null";
+String facebooklink = "null";
+String instagramlink = "null";
+String skypelink = "null";
+String youtubelink = "null";
+
+String about = "k9";
+late String brochure_file = "null";
+
+late String pp = "null";
+late String cf = "null";
 
 class Edit_profile extends StatefulWidget {
   @override
@@ -71,7 +103,7 @@ class _Edit_profileState extends State<Edit_profile> {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          tester,
+                          "Profile",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -107,6 +139,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              firstname = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -127,6 +162,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              lastname = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -147,6 +185,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              company = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -167,6 +208,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              jobtitle = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -187,6 +231,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              Address1 = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -207,6 +254,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              Address2 = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -227,6 +277,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              city = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -247,6 +300,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              state = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -267,6 +323,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              country = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -287,6 +346,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              zipcode = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -315,6 +377,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              phone = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -335,6 +400,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              phone2 = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -355,6 +423,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              email = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -375,6 +446,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              email2 = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -404,6 +478,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              linkedinlink = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -425,6 +502,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              twitterlink = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -446,6 +526,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              facebooklink = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -467,6 +550,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              instagramlink = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -488,6 +574,9 @@ class _Edit_profileState extends State<Edit_profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              skypelink = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -504,32 +593,16 @@ class _Edit_profileState extends State<Edit_profile> {
                           ),
                         ),
 
-                        SizedBox(height: 10),
                         //textfield for name with border radius
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                filled: true,
-                                hintStyle: TextStyle(
-                                    color: Color.fromRGBO(125, 143, 171, 1)),
-                                hintText: "Snapchat",
-                                fillColor: Color.fromRGBO(248, 248, 248, 1)),
-                          ),
-                        ),
 
                         SizedBox(height: 10),
                         //textfield for name with border radius
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
+                            onChanged: (String s) {
+                              youtubelink = s;
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -581,7 +654,7 @@ class _Edit_profileState extends State<Edit_profile> {
                           height: 20,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(
@@ -613,13 +686,13 @@ class _Edit_profileState extends State<Edit_profile> {
                           height: 20,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(248, 248, 248, 1),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10.0)),
+                                  BorderRadius.all(Radius.circular(10.0)),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -643,12 +716,88 @@ class _Edit_profileState extends State<Edit_profile> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 23,),
-                  Align( alignment: Alignment.centerLeft,
+                  SizedBox(
+                    height: 23,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/18 ),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 18),
                       child: RaisedButton(
-                        onPressed: () {},
+                        onPressed: () async{
+                          if (firstname != "k9" &&
+                              lastname != "k9" &&
+                              company != "k9" &&
+                              jobtitle != "k9" &&
+                              Address1 != "k9" &&
+                              city != "k9" &&
+                              state != "k9" &&
+                              country != "k9" &&
+                              zipcode != "k9" &&
+                              phone != "k9" &&
+                              email != "k9") {
+                            var datatosend = {
+                              "first_name": firstname,
+                              "last_name": lastname,
+                              "company": company,
+                              "job_title": jobtitle,
+                              "email": email,
+                              "email2": email2,
+                              "phone": phone,
+                              "phone2": phone2,
+                              "profile_pic": pp,
+                              "contact_file": cf,
+                              "address_line1": Address1,
+                              "address_line2": Address2,
+                              "city": city,
+                              "state": state,
+                              "country": country,
+                              "zipcode": zipcode,
+                              "location": location,
+                              "linkedinlink": linkedinlink,
+                              "twitterlink": twitterlink,
+                              "facebooklink": facebooklink,
+                              "instagramlink": instagramlink,
+                              "skypelink": skypelink,
+                              "youtubelink": youtubelink,
+                              "brochure_file": brochure_file,
+                              "about": " "
+                            };
+
+                          //  print(datatosend);
+                           await login(datatosend);
+                          } else {
+                            print("full fill aakiyila");
+
+                            print(firstname);
+                            print(lastname);
+                            print(company);
+                            print(jobtitle);
+                            print(Address1);
+                            print(city);
+                            print(phone);
+                            print(country);
+                            print(state);
+                            print(zipcode);
+                            print(email);
+
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                title: const Text('Incorrect credentials'),
+                                content: const Text('The credentials you entered is incorrect. Please try again.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context, 'OK'),
+                                    child: const Text('OK', style: TextStyle(color: Color(0xff9AC9C2)),),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        },
                         color: Color.fromRGBO(212, 241, 244, 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -672,5 +821,48 @@ class _Edit_profileState extends State<Edit_profile> {
                 ],
               ),
             )));
+  }
+
+  dynamic login(var datatosend) async {
+    // Controller c = Get.put(Controller());
+    try {
+      // c.username.value=email;
+
+      final url = Uri.parse("http://10.0.2.2:8000/api/contact/");
+
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(datatosend),
+      );
+      print(response.body);
+      print(response.statusCode);
+      // if(response.statusCode == 202){
+      //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile()));
+      // }else {
+      //   showDialog<String>(
+      //     context: context,
+      //     builder: (BuildContext context) => AlertDialog(
+      //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      //       title: const Text('Incorrect credentials'),
+      //       content: const Text('The credentials you entered is incorrect. Please try again.'),
+      //       actions: <Widget>[
+      //         TextButton(
+      //           onPressed: () => Navigator.pop(context, 'OK'),
+      //           child: const Text('OK', style: TextStyle(color: Color(0xff9AC9C2)),),
+      //         ),
+      //       ],
+      //     ),
+      //   );
+      // }
+    } catch (e) {
+      print(e.toString());
+    }
+    // setState(() {
+    //   flag=false;
+    // });
   }
 }

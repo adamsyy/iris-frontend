@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:nfc_card/constants.dart';
+import 'package:http/http.dart' as http;
+import 'package:nfc_card/profile/Profile.dart';
 
+late String username;
+late String password;
 
 class Username extends StatefulWidget {
   @override
@@ -8,9 +14,59 @@ class Username extends StatefulWidget {
 }
 
 class _UsernameState extends State<Username> {
+
+
+  dynamic login(String email , password) async {
+    // Controller c = Get.put(Controller());
+    try{
+      // c.username.value=email;
+      var loginbody={
+        "username":username,
+        "password":password
+      };
+      final url = Uri.parse("http://10.0.2.2:8000/login/");
+
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(loginbody),
+      );
+      print(response.body);
+
+      if(response.statusCode == 202){
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile()));
+      }else {
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+            title: const Text('Incorrect credentials'),
+            content: const Text('The credentials you entered is incorrect. Please try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK', style: TextStyle(color: Color(0xff9AC9C2)),),
+              ),
+            ],
+          ),
+        );
+      }
+    }catch(e){
+      print(e.toString());
+    }
+    // setState(() {
+    //   flag=false;
+    // });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(  resizeToAvoidBottomInset: false,
         body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -39,7 +95,7 @@ class _UsernameState extends State<Username> {
                 ),
                 SizedBox(height: 110),
                 Text(
-                  "Enter your Username",
+                  "Enter your Credentials",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -53,7 +109,34 @@ class _UsernameState extends State<Username> {
                     Container(
                       height: 70,
                       width: 217,
-                      child: TextField(
+                      child: TextField(  textAlign: TextAlign.center,onChanged: (String s){
+                        username=s;
+                      },
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          )),
+                    ),
+                    SizedBox(width: 0),
+
+
+                  ],
+                ),
+                Row(crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //add a text field
+                    SizedBox(width: 50,),
+                    Container(
+                      height: 70,
+                      width: 217,
+                      child: TextField(  textAlign: TextAlign.center,onChanged: (String s){
+                        password=s;
+                      },
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
@@ -65,14 +148,18 @@ class _UsernameState extends State<Username> {
                     ),
                     SizedBox(width: 10),
 
-                    Container(
-                      height: 40,
-                      width: 40,
-                      child: Icon(Icons.arrow_forward_ios,
-                          color: Colors.black, size: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.white,
+                    GestureDetector(onTap: ()async{
+                      await login(username,password);
+                    },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        child: Icon(Icons.arrow_forward_ios,
+                            color: Colors.black, size: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white,
+                        ),
                       ),
                     )
                   ],
