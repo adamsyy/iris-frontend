@@ -39,6 +39,8 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   http: ^0.13.4
   url_launcher: ^6.1.8
+  shared_preferences: ^2.0.17
+
 
 
 dev_dependencies:

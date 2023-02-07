@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nfc_card/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:nfc_card/profile/Edit_profile.dart';
 import 'package:nfc_card/profile/Profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 late String username;
 late String password;
@@ -24,7 +26,8 @@ class _UsernameState extends State<Username> {
         "username":username,
         "password":password
       };
-      final url = Uri.parse("http://10.0.2.2:8000/login/");
+  final url = Uri.parse("http://localhost:8081/login/");
+    //  final url = Uri.parse("http://10.0.2.2:8081/login/");
 
       final response = await http.post(
         url,
@@ -34,10 +37,22 @@ class _UsernameState extends State<Username> {
         },
         body: jsonEncode(loginbody),
       );
-      print(response.body);
+
+
+
+
+
+
 
       if(response.statusCode == 202){
-         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile()));
+
+        // Obtain shared preferences.
+        final prefs = await SharedPreferences.getInstance();
+
+
+   await prefs.setString('email',username);
+
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Edit_profile()));
       }else {
         showDialog<String>(
           context: context,

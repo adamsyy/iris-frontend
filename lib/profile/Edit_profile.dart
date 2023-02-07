@@ -1,9 +1,15 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nfc_card/auth/screens/Username.dart';
 import 'package:nfc_card/constants.dart';
 import 'package:nfc_card/profile/Profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+int check=0;
 
 String tester = "test";
 
@@ -14,7 +20,7 @@ String jobtitle = "k9";
 String Address1 = "k9";
 String Address2 = "null";
 String city = "k9";
-String email = "k9";
+String email = "adamrubiks@gmail.com";
 String phone = "k9";
 String email2 = "null";
 String phone2 = "null";
@@ -29,6 +35,7 @@ String facebooklink = "null";
 String instagramlink = "null";
 String skypelink = "null";
 String youtubelink = "null";
+String website="null";
 
 String about = "k9";
 late String brochure_file = "null";
@@ -37,29 +44,76 @@ late String pp = "null";
 late String cf = "null";
 
 class Edit_profile extends StatefulWidget {
+
+  static const String route = '/edit';
   @override
   State<Edit_profile> createState() => _Edit_profileState();
 }
 
 class _Edit_profileState extends State<Edit_profile> {
   @override
+
+
+  void checkLogin() async {
+    // Here we check if user already logged in or not
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? emailval = await pref.getString("email");
+
+
+
+
+    if (emailval != null) {
+      setState(() {
+      email=emailval;
+
+      });
+    } else {
+
+
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Username(),
+          ),
+              (route) => false);
+
+
+    }
+  }
+
+
   void initState() {
     // TODO: implement initState
 
     super.initState();
+
+    checkLogin();
+    profiledetails("EHEH");
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     var deviceType =
         MediaQuery.of(context).devicePixelRatio >= 2 ? "Phone" : "Laptop";
     print(deviceType);
     setState(() {
       tester = deviceType;
+
     });
 
+
+
+
+
+
+
+
     return Scaffold(
-        body: Container(
+        body:check==1? Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
@@ -422,24 +476,26 @@ class _Edit_profileState extends State<Edit_profile> {
 
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: TextField(
-                            onChanged: (String s) {
-                              email = s;
-                            },
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
+                          child:Container(height: 30,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(248, 248, 248, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(8)),
+                              border: Border.all(
+                                color: Color.fromRGBO(125, 143, 171, 1),
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                email,
+                                style: TextStyle(
+                                  color: Color.fromRGBO(125, 143, 171, 1),
                                 ),
-                                filled: true,
-                                hintStyle: TextStyle(
-                                    color: Color.fromRGBO(125, 143, 171, 1)),
-                                hintText: "Email ID*",
-                                fillColor: Color.fromRGBO(248, 248, 248, 1)),
-                          ),
+                              ),
+                            ),
+                          )
+
+
                         ),
                         SizedBox(height: 10),
 
@@ -726,27 +782,17 @@ class _Edit_profileState extends State<Edit_profile> {
                           left: MediaQuery.of(context).size.width / 18),
                       child: RaisedButton(
                         onPressed: () async{
-                          if (firstname != "k9" &&
-                              lastname != "k9" &&
-                              company != "k9" &&
-                              jobtitle != "k9" &&
-                              Address1 != "k9" &&
-                              city != "k9" &&
-                              state != "k9" &&
-                              country != "k9" &&
-                              zipcode != "k9" &&
-                              phone != "k9" &&
-                              email != "k9") {
+
                             var datatosend = {
                               "first_name": firstname,
                               "last_name": lastname,
                               "company": company,
                               "job_title": jobtitle,
-                              "email": email,
+                              "email": "adamrubiks@gmail.com",
                               "email2": email2,
                               "phone": phone,
                               "phone2": phone2,
-                              "profile_pic": pp,
+                              "profile_pic": null,
                               "contact_file": cf,
                               "address_line1": Address1,
                               "address_line2": Address2,
@@ -761,42 +807,13 @@ class _Edit_profileState extends State<Edit_profile> {
                               "instagramlink": instagramlink,
                               "skypelink": skypelink,
                               "youtubelink": youtubelink,
-                              "brochure_file": brochure_file,
+                              "brochure_file": null,
                               "about": " "
                             };
 
                           //  print(datatosend);
                            await login(datatosend);
-                          } else {
-                            print("full fill aakiyila");
 
-                            print(firstname);
-                            print(lastname);
-                            print(company);
-                            print(jobtitle);
-                            print(Address1);
-                            print(city);
-                            print(phone);
-                            print(country);
-                            print(state);
-                            print(zipcode);
-                            print(email);
-
-                            showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                                title: const Text('Incorrect credentials'),
-                                content: const Text('The credentials you entered is incorrect. Please try again.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context, 'OK'),
-                                    child: const Text('OK', style: TextStyle(color: Color(0xff9AC9C2)),),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
                         },
                         color: Color.fromRGBO(212, 241, 244, 1),
                         shape: RoundedRectangleBorder(
@@ -820,24 +837,131 @@ class _Edit_profileState extends State<Edit_profile> {
                   ),
                 ],
               ),
-            )));
+            )):Center(child: CupertinoActivityIndicator())
+
+
+    );
   }
+
+  dynamic profiledetails(String email) async {
+    // Controller c = Get.put(Controller());
+    try{
+      // c.username.value=email;
+
+       final url = Uri.parse("http://127.0.0.1:8081/profile/adamrubiks@gmail.com");
+    //  final url = Uri.parse("http://10.0.2.2:8081/profile/adamrubiks@gmail.com");
+
+
+      print(url.toString());
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+
+        },
+
+      );
+      //  print(response.body);
+      print("profileil error");
+      print(response.body);
+
+data=jsonDecode(response.body);
+
+
+
+
+
+
+      if(response.statusCode == 200){
+        //  print("print akua");
+
+
+        setState(() {
+
+
+          firstname = data["first_name"]??" ";
+          lastname =  data["last_name"]??" ";
+          company = data["country"]??" ";
+          jobtitle =  data["job_title"]??" ";
+          Address1 =  data["address_line1"]??" ";
+          Address2 =  data["address_line2"]??" ";
+          city =  data["city"]??" ";
+
+          phone =  data["phone"]??" ";
+          email2 = data["email2"]??" ";
+          phone2 =  data["phone2"]??" ";
+          state = data["state"]??" ";
+          country =  data["first_name"]??" ";
+          zipcode =  data["zipcode"]??" ";
+          location =  data["location"]??" ";
+
+          linkedinlink =  data["linkedinlink"]??" ";
+          twitterlink = data["twitterlink"]??" ";
+          facebooklink =  data["facebooklink"]??" ";
+          instagramlink = data["instagramlink"]??" ";
+          skypelink =  data["skypelink"]??" ";
+          youtubelink = data["youtubelink"]??" ";
+          website=data["website"]??" ";
+
+          about =  data["about"]??" ";
+
+          pp =  data["profile_pic"]??" ";
+
+
+          email =  data["email"];
+
+          check=1;
+          email=data["email"];
+          //  print("response.body");
+        });
+        WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {email=data["email"];}));
+
+        data=jsonDecode(response.body);
+      }else {
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+
+            content: const Text('Something went wrong.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK', style: TextStyle(color: Color(0xff9AC9C2)),),
+              ),
+            ],
+          ),
+        );
+      }
+    }catch(e){
+      print(e.toString());
+    }
+    // setState(() {
+    //   flag=false;
+    // });
+  }
+
+
 
   dynamic login(var datatosend) async {
     // Controller c = Get.put(Controller());
     try {
       // c.username.value=email;
 
-      final url = Uri.parse("http://10.0.2.2:8000/api/contact/");
+      final url = Uri.parse("http://127.0.0.1:8081/edit/adamrubiks@gmail.com");
 
-      final response = await http.post(
+      final response = await http.put(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+
         },
         body: jsonEncode(datatosend),
       );
+
+      print("thaze  error");
       print(response.body);
       print(response.statusCode);
       // if(response.statusCode == 202){
