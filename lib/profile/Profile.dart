@@ -12,6 +12,11 @@ int check=0;
 late var data;
 
 class Profile extends StatefulWidget {
+
+  static const route = '/profile/:username';
+
+
+
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -97,6 +102,8 @@ print(response.body);
 
   @override
   Widget build(BuildContext context) {
+    final usernameArg = ModalRoute.of(context)!.settings.arguments as String;
+    print(usernameArg);
     return Scaffold(
         body:  check==1?Container(
             height: MediaQuery.of(context).size.height,

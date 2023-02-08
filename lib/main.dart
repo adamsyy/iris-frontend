@@ -13,6 +13,8 @@ void main() {
     routes: {
       '/': (context) => Username(),
       Edit_profile.route: (context) => Edit_profile(),
+      Profile.route: (context) => Profile(),
+
     },
   ));
 }
