@@ -623,27 +623,31 @@ class _Edit_profile_laptopState extends State<Edit_profile_laptop> {
 
                         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 0),
-                              child: Container(
-                                height: 50,width: widthhere/3.1,
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(248, 248, 248, 1),
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("  Upload profile picture",style: TextStyle(color: Color.fromRGBO(125, 143, 171, 1) ),),
+                            GestureDetector(onTap: ()async{
 
-                                    Padding(
-                                      padding:  EdgeInsets.only(right: 10),
-                                      child: Icon(FontAwesomeIcons.cloudUploadAlt ,color: Colors.black,),
-                                    ),
-                                  ],
+                            },
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 0),
+                                child: Container(
+                                  height: 50,width: widthhere/3.1,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(248, 248, 248, 1),
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("  Upload profile picture",style: TextStyle(color: Color.fromRGBO(125, 143, 171, 1) ),),
+
+                                      Padding(
+                                        padding:  EdgeInsets.only(right: 10),
+                                        child: Icon(FontAwesomeIcons.cloudUploadAlt ,color: Colors.black,),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+
                               ),
-
                             ),
 
                             Padding(

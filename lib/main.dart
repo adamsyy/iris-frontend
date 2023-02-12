@@ -1,35 +1,52 @@
+import 'package:fluro/fluro.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nfc_card/Routess.dart';
 import 'package:nfc_card/auth/screens/Login.dart';
 import 'package:nfc_card/auth/screens/Username.dart';
 import 'package:nfc_card/profile/Edit_profile.dart';
+import 'package:nfc_card/profile/Edit_profile_browser.dart';
 import 'package:nfc_card/profile/Edit_profile_laptop.dart';
 import 'package:nfc_card/profile/Profile.dart';
+import 'dart:ui' show kIsWeb;
 
 import 'auth/screens/Otp.dart';
 
+late String myurl;
+late bool toProfile;
+late String profilelink;
 void main() {
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => Username(),
-      Edit_profile.route: (context) => Edit_profile(),
-      Profile.route: (context) => Profile(),
 
-    },
-  ));
+  String platformName;
+  if (kIsWeb) {
+    myurl = Uri.base.toString();
+    toProfile=myurl.contains("59773/");
+    if(toProfile){
+
+      profilelink = myurl.split("59773/")[1];
+    }
+  }else{
+    profilelink='edit';
+  }
+
+
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print("main ahne");
-    return Edit_profile();
+    return MaterialApp(
+     home: decidepage()
+    );
   }
-}
 
+  Widget decidepage(){
+   if(profilelink=='home'){return Username();
+  }
+   if(profilelink=='edit'){return Edit_profile();
+   }
+ return Profile(id: profilelink);
 
-
-
+}}

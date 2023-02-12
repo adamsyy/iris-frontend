@@ -1,19 +1,29 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nfc_card/auth/screens/Username.dart';
 import 'package:nfc_card/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+
 
 int check=0;
 late var data;
 
 class Profile extends StatefulWidget {
+   late String id;
+  Profile({required this.id});
 
-  static const route = '/profile/:username';
 
 
 
@@ -38,7 +48,12 @@ class _ProfileState extends State<Profile> {
       // c.username.value=email;
 
    //  final url = Uri.parse("http://127.0.0.1:8081/profile/adamrubiks@gmail.com");
-     final url = Uri.parse("http://10.0.2.2:8081/profile/adamrubiks@gmail.com");
+      var url;
+    if(widget.id.contains("@")){
+       url = Uri.parse(controller.baseurl+"profile/"+widget.id);
+    }else{
+       url = Uri.parse(controller.baseurl+"profile/"+widget.id+'@gmail.com');
+    }
 
 
 print(url.toString());
@@ -90,8 +105,17 @@ print(response.body);
   dynamic downloadcontact() async {
     // Controller c = Get.put(Controller());
     try{
-      final Uri _url = Uri.parse("http://127.0.0.1:8081/contact/adamrubiks@gmail.com");
-      await launchUrl(_url);
+var url;
+      if(widget.id.contains("@")){
+        url = Uri.parse(controller.baseurl+"contact/"+widget.id);
+        await launchUrl(url);
+      }else{
+        url = Uri.parse(controller.baseurl+"contact/"+widget.id+'@gmail.com');
+        await launchUrl(url);
+      }
+
+
+
     }catch(e){
       print(e.toString());
     }
@@ -100,10 +124,13 @@ print(response.body);
     // });
   }
 
+
   @override
   Widget build(BuildContext context) {
-    final usernameArg = ModalRoute.of(context)!.settings.arguments as String;
-    print(usernameArg);
+
+    print("gonna orint oke");
+    print(widget.id.toString());
+
     return Scaffold(
         body:  check==1?Container(
             height: MediaQuery.of(context).size.height,
@@ -126,7 +153,7 @@ print(response.body);
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       image: DecorationImage(
-                        image: AssetImage("pictures/adamsy.jpg"),
+                        image:data["profile_pic"]!=null ?NetworkImage(data["profile_pic"]):NetworkImage("https://i.ibb.co/jr8RFT5/default-profile-pic.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -174,25 +201,81 @@ print(response.body);
                   ),
 
                   SizedBox(height: 20),
-                  Container(
-                    height: 56,
-                    width: 343,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(212, 241, 244, 1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(width: 20),
-                        Text("Share Contact",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400)),
-                        SizedBox(width: 10),
-                        Icon(Icons.share, color: Colors.black),
-                      ],
+                  GestureDetector(onTap: ()async{
+                    // try{
+                    //   var url;
+                    //   if(widget.id.contains("@")){
+                    //     url = Uri.parse(controller.baseurl+"contact/"+widget.id);
+                    //     Share.share(url.toString(),subject: 'Contact');
+                    //   }else{
+                    //     url = Uri.parse(controller.baseurl+"contact/"+widget.id+'@gmail.com');
+                    //     Share.share(url.toString(),subject: 'Contact');
+                    //   }
+                    //
+                    //
+                    //
+                    // }catch(e){
+                    //   print(e.toString());
+                    // }
+
+                    var url;
+                    if(widget.id.contains("@")){
+                      url = controller.baseurl+"contact/"+widget.id;
+
+                    }else{
+                      url = controller.baseurl+"contact/"+widget.id+'@gmail.com';
+
+                    }
+
+                    var width = MediaQuery.of(context).size.width;
+                    var isPhone = width < 720;
+                    if(isPhone){
+                      var fileName = url.split("/").last;
+
+                      // Get the temporary directory for storing the downloaded file
+                      var tempDir = await getTemporaryDirectory();
+                      var filePath = '${tempDir.path}/$fileName';
+
+                      // Download the file
+                      var client = HttpClient();
+                      var request = await client.getUrl(Uri.parse(url));
+                      var response = await request.close();
+                      var bytes = await consolidateHttpClientResponseBytes(response);
+                      var file = File(filePath);
+                      await file.writeAsBytes(bytes);
+
+                      // Share the file
+                      Share.shareFiles([filePath]);
+                    }else{
+                      Share.share(url,subject: 'contact');
+                    }
+
+
+
+
+
+
+                  },
+                    child: Container(
+                      height: 56,
+                      width: 343,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(212, 241, 244, 1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 20),
+                          Text("Share Contact",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(width: 10),
+                          Icon(Icons.share, color: Colors.black),
+                        ],
+                      ),
                     ),
                   ),
 
@@ -539,27 +622,34 @@ print(response.body);
 
 
                   SizedBox(height: 20),
-                  Container(
-                    height: 56,
-                    width: 343,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(212, 241, 244, 1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(width: 20),
-                        Text("Download Brochure",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400)),
-                        SizedBox(width: 10),
-                        Icon(FontAwesomeIcons.bookOpenReader),
+                  GestureDetector(onTap: ()async{
+                    final Uri _url = Uri.parse(data['brochure_file']);
+                    var response = await http.get(_url);
+                    var file = File('newahne.jpg');
+                    await file.writeAsBytes(response.bodyBytes);
+                  },
+                    child: Container(
+                      height: 56,
+                      width: 343,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(212, 241, 244, 1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 20),
+                          Text("Download Brochure",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(width: 10),
+                          Icon(FontAwesomeIcons.bookOpenReader),
 
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
 SizedBox(height: 20,),
@@ -568,4 +658,8 @@ SizedBox(height: 20,),
               ),
             )):Center(child: CupertinoActivityIndicator(),));
   }
+
+
+
+
 }

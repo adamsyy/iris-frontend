@@ -1,14 +1,17 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nfc_card/Controller.dart';
 import 'package:nfc_card/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_card/profile/Edit_profile.dart';
 import 'package:nfc_card/profile/Profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 late String username;
 late String password;
+Controller controller = Get.put(Controller());
 
 class Username extends StatefulWidget {
   @override
@@ -26,8 +29,8 @@ class _UsernameState extends State<Username> {
         "username":username,
         "password":password
       };
-  final url = Uri.parse("http://localhost:8081/login/");
-    //  final url = Uri.parse("http://10.0.2.2:8081/login/");
+  final url = Uri.parse(controller.baseurl+'login/');
+
 
       final response = await http.post(
         url,
@@ -40,7 +43,7 @@ class _UsernameState extends State<Username> {
 
 
 
-
+print(response.body);
 
 
 
@@ -176,9 +179,20 @@ class _UsernameState extends State<Username> {
                           color: Colors.white,
                         ),
                       ),
-                    )
+                    ),
+                    
+                    
                   ],
-                )
+                ),
+                GestureDetector(onTap: ()async{
+                  try{
+                    final Uri _url = Uri.parse(controller.baseurl+'reset-password');
+                    await launchUrl(_url);
+                  }catch(e){
+                    print(e.toString());
+                  }
+                },
+                    child: Text("Forgot password?", style: TextStyle(color: Color(0xff9AC9C2))))
               ],
             )));
   }
