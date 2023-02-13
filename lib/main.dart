@@ -8,6 +8,7 @@ import 'package:nfc_card/profile/Edit_profile.dart';
 import 'package:nfc_card/profile/Edit_profile_browser.dart';
 import 'package:nfc_card/profile/Edit_profile_laptop.dart';
 import 'package:nfc_card/profile/Profile.dart';
+import 'package:url_strategy/url_strategy.dart';
 import 'dart:ui' show kIsWeb;
 
 import 'auth/screens/Otp.dart';
@@ -17,17 +18,13 @@ late bool toProfile;
 late String profilelink;
 void main() {
 
-  String platformName;
-  if (kIsWeb) {
-    myurl = Uri.base.toString();
-    toProfile=myurl.contains("59773/");
-    if(toProfile){
+  myurl = Uri.base.toString();
+  WidgetsFlutterBinding.ensureInitialized();
+  setPathUrlStrategy();
 
-      profilelink = myurl.split("59773/")[1];
-    }
-  }else{
-    profilelink='edit';
-  }
+
+
+
 
 
 
@@ -38,15 +35,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     home: decidepage()
+home:  Decidepage(),
     );
   }
 
-  Widget decidepage(){
-   if(profilelink=='home'){return Username();
+  Widget Decidepage() {
+    myurl = Uri.base.toString();
+    int lastIndex = myurl.lastIndexOf("/");
+    String word = myurl.substring(lastIndex + 1);
+    if(word.length==0){
+      return Edit_profile();
+    }
+    if(word=='login'){return Username();}
+else if(word=='edit'){return Edit_profile();}
+return Profile(id: word);
   }
-   if(profilelink=='edit'){return Edit_profile();
-   }
- return Profile(id: profilelink);
-
-}}
+}
