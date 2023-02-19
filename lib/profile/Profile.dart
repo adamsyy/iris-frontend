@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:nfc_card/profile/Edit_profile.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +40,10 @@ class _ProfileState extends State<Profile> {
 
     super.initState();
 
-    profiledetails("adam");
+    profiledetails();
   }
 
-  dynamic profiledetails(String email) async {
+  dynamic profiledetails() async {
     // Controller c = Get.put(Controller());
     try{
       // c.username.value=email;
@@ -78,6 +79,7 @@ print(response.body);
           });
 
       data=jsonDecode(response.body);
+
       }else {
         showDialog<String>(
           context: context,
@@ -153,7 +155,7 @@ var url;
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       image: DecorationImage(
-                        image:data["profile_pic"]!=null ?NetworkImage(data["profile_pic"]):NetworkImage("https://i.ibb.co/jr8RFT5/default-profile-pic.png"),
+                        image:data["profile_pic"]!=null ?NetworkImage(data["profile_pic"]+'/'):NetworkImage("https://i.ibb.co/jr8RFT5/default-profile-pic.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -229,7 +231,7 @@ var url;
 
                   //  await Clipboard.setData(ClipboardData(text: "MATHEW SCENE THANE"));
 
-                    Clipboard.setData(new ClipboardData(text: 'http://localhost:59858/'+data['email'])).then((_){
+                    Clipboard.setData(new ClipboardData(text: 'https://profile.iriscards.com/'+data['email'])).then((_){
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text('Copied to your clipboard !')));
                     });
@@ -296,80 +298,56 @@ var url;
                     ),
                   ),
 
+                  data["phone2"].length!=0? GestureDetector(onTap: ()async{
 
-
-                  SizedBox(height: 20),
-                  Container(
-                    height: 56,
-                    width: 343,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 22),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.email, color: Colors.red),
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 56,
+                        width: 343,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 22),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.phone, color: Colors.blue),
 
-                          Expanded(
-                            child: Container(
-                              child: Text(
-                                data["email"],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
+
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    data['phone2'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            ),
+
+                              SizedBox(width: 10),
+                            ],
                           ),
-                          SizedBox(width: 10),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ):SizedBox( height:0),
 
                   SizedBox(height: 20),
-                  Container(
-                    height: 56,
-                    width: 343,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 22),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.person, color: Colors.black),
+                  GestureDetector(onTap: ()async{
 
-                          Expanded(
-                            child: Container(
-                              child: Text(
-                                data["job_title"],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    final Uri _url = Uri.parse('mailto:'+data['email']);
+                    await launchUrl(_url);
+                  },
                     child: Container(
-                      height: 100,
+                      height: 56,
                       width: 343,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -380,40 +358,241 @@ var url;
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(Icons.map_outlined, color: Colors.green),
+                            Icon(Icons.email, color: Colors.red),
 
                             Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(data["city"],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400)),
-                                  Text(data["state"],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400)),
-                                  Text(data["zipcode"],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400)),
-                                ],
+                              child: Container(
+                                child: Text(
+                                  data["email"],
+                                  style: TextStyle(overflow: TextOverflow.ellipsis,
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
+                            SizedBox(width: 10),
                           ],
                         ),
                       ),
                     ),
                   ),
 
+                  data["email2"].length!=0? GestureDetector(onTap: ()async{
+
+                  },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: GestureDetector(onTap: ()async{
+                        final Uri _url = Uri.parse('mailto:'+data['email2']);
+                        await launchUrl(_url);
+                      },
+                        child: Container(
+                          height: 56,
+                          width: 343,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 22),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.email, color: Colors.red),
+
+                                Expanded(
+                                  child: Container(
+                                    child: Text(
+                                      data['email2'],
+                                      style: TextStyle(overflow: TextOverflow.ellipsis,
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(width: 10),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ):SizedBox( height:0),
 
 
-                  GestureDetector(onTap: ()async{
+                  data["job_title"].length!=0? GestureDetector(onTap: ()async{
+                    final Uri _url = Uri.parse(data["website"]);
+                    await launchUrl(_url);
+                  },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 56,
+                        width: 343,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 22),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.person),
+
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    data["job_title"],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(width: 10),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ):SizedBox( height:0),
+
+                  data["address_line2"].length!=0&&data["address_line1"].length!=0&&data["city"].length!=0&&data["state"].length!=0&&data["zipcode"].length!=0? Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Container(
+                      height: 100,
+                      width: 343,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 22),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.map_outlined, color: Colors.green),
+                              SizedBox(width: 35),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: Text(data["address_line1"]+' '+data["address_line2"],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(data["city"]+',',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400)),
+                                        SizedBox(width: 2),
+                                        Text(data["state"]+',',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400)),
+                                        SizedBox(width: 2),
+                                        Text(data["zipcode"],
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ) : SizedBox(height: 0),
+                  data["address_line2"].length==0&&data["address_line1"].length!=0&&data["city"].length!=0&&data["state"].length!=0&&data["zipcode"].length!=0? Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Container(
+                      height: 100,
+                      width: 343,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 22),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.map_outlined, color: Colors.green),
+                              SizedBox(width: 35),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: Text(data["address_line1"],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(data["city"]+',',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400)),
+                                        SizedBox(width: 2),
+                                        Text(data["state"]+',',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400)),
+                                        SizedBox(width: 2),
+                                        Text(data["zipcode"],
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ) : SizedBox(height: 0),
+
+                  data["location"].length!=0?GestureDetector(onTap: ()async{
                     final Uri _url = Uri.parse(data["location"]);
                     await launchUrl(_url);
                   },
@@ -436,7 +615,7 @@ var url;
                               Expanded(
                                 child: Container(
                                   child: Text(
-                                    'maps.google.com',
+                                    'Location',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
@@ -446,55 +625,101 @@ var url;
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
                             ],
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ):SizedBox(height: 0,),
+                  data["website"].length!=0? GestureDetector(onTap: ()async{
+                    final Uri _url = Uri.parse(data["website"]);
+                    await launchUrl(_url);
+                  },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 56,
+                        width: 343,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 22),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(FontAwesomeIcons.globe),
+
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    'Website',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ):SizedBox( height:0),
+                  data["linkedinlink"].length!=0? GestureDetector(onTap: ()async{
+                    final Uri _url = Uri.parse(data["linkedinlink"]);
+                    await launchUrl(_url);
+                  },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 56,
+                        width: 343,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 22),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(FontAwesomeIcons.linkedin, color: Colors.lightBlueAccent),
+
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    'Linkedin',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ):SizedBox( height:0),
 
 
-                 data["website"].length!=0? GestureDetector(onTap: ()async{
-                   final Uri _url = Uri.parse(data["website"]);
-                   await launchUrl(_url);
-                 },
-                   child: Padding(
-                     padding: const EdgeInsets.only(top: 20),
-                     child: Container(
-                       height: 56,
-                       width: 343,
-                       decoration: BoxDecoration(
-                         color: Colors.white,
-                         borderRadius: BorderRadius.circular(8),
-                       ),
-                       child: Padding(
-                         padding: const EdgeInsets.only(left: 22),
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.start,
-                           children: [
-                             Icon(FontAwesomeIcons.portrait, color: Colors.black),
-
-                             Expanded(
-                               child: Container(
-                                 child: Text(
-                                   'Website',
-                                   style: TextStyle(
-                                     color: Colors.black,
-                                     fontSize: 18,
-                                     fontWeight: FontWeight.w400,
-                                   ),
-                                   textAlign: TextAlign.center,
-                                 ),
-                               ),
-                             ),
-                             SizedBox(width: 10),
-                           ],
-                         ),
-                       ),
-                     ),
-                   ),
-                 ):SizedBox( height:0),
 
 
                   data["facebooklink"].length!=0?  GestureDetector(onTap: ()async{
@@ -530,7 +755,9 @@ var url;
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
                             ],
                           ),
                         ),
@@ -558,7 +785,7 @@ var url;
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(FontAwesomeIcons.twitter),
+                              Icon(FontAwesomeIcons.twitter,color: Colors.lightBlueAccent,),
 
                               Expanded(
                                 child: Container(
@@ -573,13 +800,15 @@ var url;
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
                             ],
                           ),
                         ),
                       ),
                     ),
-                  ):SizedBox(height: -20,),
+                  ):SizedBox(height: -0,),
 
 
                   data["instagramlink"].length!=0?GestureDetector(onTap: ()async{
@@ -600,12 +829,12 @@ var url;
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(FontAwesomeIcons.instagram),
+                              Icon(FontAwesomeIcons.instagram,color: Colors.purple,),
 
                               Expanded(
                                 child: Container(
                                   child: Text(
-                                    'instagram',
+                                    'Instagram',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
@@ -615,7 +844,9 @@ var url;
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
                             ],
                           ),
                         ),
@@ -624,7 +855,7 @@ var url;
                   ):SizedBox(height:0),
 
 
-                  data["skypelink"]!=null?  GestureDetector(onTap: ()async{
+                  data["skypelink"].length!=0?  GestureDetector(onTap: ()async{
                     final Uri _url = Uri.parse(data["skypelink"]);
                     await launchUrl(_url);
                   },
@@ -657,7 +888,9 @@ var url;
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
                             ],
                           ),
                         ),
@@ -699,7 +932,9 @@ var url;
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              Icon(FontAwesomeIcons.link, color: Colors.grey,size: 16,),
+
+                              SizedBox(width: 18),
                             ],
                           ),
                         ),
@@ -709,7 +944,7 @@ var url;
 
 
 
-                  GestureDetector(onTap: ()async{
+                  data["brochure_file"]!=null? GestureDetector(onTap: ()async{
                     final Uri _url = Uri.parse(data['brochure_file']);
                     try{
                       var url;
@@ -753,9 +988,9 @@ var url;
                         ),
                       ),
                     ),
-                  ),
-SizedBox(height: 20,),
-                  Text("Made with ❤️ by Iris Cards",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400),),
+                  ):SizedBox(height: 0,),
+
+                 SizedBox(height: 25,),
                 ],
               ),
             )):Center(child: CupertinoActivityIndicator(),));

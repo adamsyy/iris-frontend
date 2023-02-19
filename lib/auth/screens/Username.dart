@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nfc_card/Controller.dart';
@@ -12,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 late String username;
 late String password;
 Controller controller = Get.put(Controller());
+int check=0;
 
 class Username extends StatefulWidget {
   @override
@@ -22,6 +24,9 @@ class _UsernameState extends State<Username> {
 
 
   dynamic login(String email , password) async {
+    setState(() {
+      check=1;
+    });
     // Controller c = Get.put(Controller());
     try{
       // c.username.value=email;
@@ -45,11 +50,16 @@ class _UsernameState extends State<Username> {
 
 print(response.body);
 
-
+      setState(() {
+        check=0;
+      });
 
       if(response.statusCode == 202){
 
+
+
         // Obtain shared preferences.
+
         final prefs = await SharedPreferences.getInstance();
 
 
@@ -130,7 +140,7 @@ print(response.body);
                       child: TextField(  textAlign: TextAlign.center,onChanged: (String s){
                         username=s;
                       },
-                          decoration: InputDecoration(
+                          decoration: InputDecoration(hintText: 'Username',
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
@@ -152,10 +162,10 @@ print(response.body);
                     Container(
                       height: 70,
                       width: 217,
-                      child: TextField(  textAlign: TextAlign.center,onChanged: (String s){
+                      child: TextField( obscureText: true, textAlign: TextAlign.center,onChanged: (String s){
                         password=s;
                       },
-                          decoration: InputDecoration(
+                          decoration: InputDecoration(hintText: 'Password',
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
@@ -169,14 +179,17 @@ print(response.body);
                     GestureDetector(onTap: ()async{
                       await login(username,password);
                     },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        child: Icon(Icons.arrow_forward_ios,
-                            color: Colors.black, size: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          child:check==0? Icon(Icons.arrow_forward_ios,
+                              color: Colors.black, size: 20):Center(child: CupertinoActivityIndicator()),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

@@ -24,6 +24,10 @@ final ImagePicker _picker2 = ImagePicker();
 bool ppuploaded2 = false;
 int check = 0;
 
+int c1=0;
+int c2=0;
+int c3=0;
+
 String tester = "test";
 
 String firstname = "k9";
@@ -33,7 +37,7 @@ String jobtitle = "k9";
 String Address1 = "k9";
 String Address2 = "null";
 String city = "k9";
-String email = "adamrubiks@gmail.com";
+late String email = "adamrubiks@gmail.com";
 String phone = "k9";
 String email2 = "null";
 String phone2 = "null";
@@ -50,7 +54,7 @@ String skypelink = "null";
 String youtubelink = "null";
 String website = "null";
 
-String about = "k9";
+
 
 late String cf = "null";
 
@@ -76,6 +80,10 @@ class _Edit_profileState extends State<Edit_profile> {
       // print("File name: " + fileName);
 
     } catch (e) {
+      setState(() {
+
+        ppuploaded = false;
+      });
       print("Image picker error " + e.toString());
     }
   }
@@ -92,14 +100,20 @@ class _Edit_profileState extends State<Edit_profile> {
 
         // upload file
         print(fileName);
+        setState(() {
+          // imageFile = pickedFile!;
+          ppuploaded2 = true;
+        });
       } else {
         // User canceled the picker
+        setState(() {
+
+          ppuploaded2 = false;
+        });
       }
-      setState(() {
-        // imageFile = pickedFile!;
-        ppuploaded2 = true;
-      });
+
     } catch (e) {
+
       print("Image picker error " + e.toString());
     }
   }
@@ -112,6 +126,7 @@ class _Edit_profileState extends State<Edit_profile> {
     if (emailval != null) {
       setState(() {
         email = emailval;
+        profiledetails(email);
       });
     } else {
       Navigator.pushAndRemoveUntil(
@@ -129,7 +144,6 @@ class _Edit_profileState extends State<Edit_profile> {
     super.initState();
 
     checkLogin();
-    profiledetails(email);
   }
 
   @override
@@ -300,11 +314,16 @@ class _Edit_profileState extends State<Edit_profile> {
                                       ),
                                     ),
                                     filled: true,
-                                    hintStyle: TextStyle(
-                                        color: Colors.black.withOpacity(0.7)),
+                                    hintStyle: data["company"].length != 0
+                                        ? TextStyle(
+                                        color:
+                                        Colors.black.withOpacity(0.7))
+                                        : TextStyle(
+                                        color: Color.fromRGBO(
+                                            125, 143, 171, 1)),
                                     hintText: data["company"].length != 0
                                         ? data["company"]
-                                        : 'Company*',
+                                        : 'Company',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -327,11 +346,16 @@ class _Edit_profileState extends State<Edit_profile> {
                                       ),
                                     ),
                                     filled: true,
-                                    hintStyle: TextStyle(
-                                        color: Colors.black.withOpacity(0.7)),
+                                    hintStyle: data["job_title"].length != 0
+                                        ? TextStyle(
+                                        color:
+                                        Colors.black.withOpacity(0.7))
+                                        : TextStyle(
+                                        color: Color.fromRGBO(
+                                            125, 143, 171, 1)),
                                     hintText: data["job_title"].length != 0
                                         ? data["job_title"]
-                                        : 'Job Title*',
+                                        : 'Job Title',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -341,11 +365,12 @@ class _Edit_profileState extends State<Edit_profile> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
-                              child: TextField(
+                              child: TextField(  maxLines: null,
+                                  minLines: 1,
                                 onChanged: (String s) {
                                   Address1 = s;
                                 },
-                                decoration: InputDecoration(
+                                decoration: InputDecoration( hintMaxLines: 2,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(
@@ -354,8 +379,13 @@ class _Edit_profileState extends State<Edit_profile> {
                                       ),
                                     ),
                                     filled: true,
-                                    hintStyle: TextStyle(
-                                        color: Colors.black.withOpacity(0.7)),
+                                    hintStyle: data["address_line1"].length != 0
+                                        ? TextStyle(
+                                        color:
+                                        Colors.black.withOpacity(0.7))
+                                        : TextStyle(
+                                        color: Color.fromRGBO(
+                                            125, 143, 171, 1)),
                                     hintText: data["address_line1"].length != 0
                                         ? data["address_line1"]
                                         : 'Address Line*',
@@ -368,11 +398,12 @@ class _Edit_profileState extends State<Edit_profile> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
-                              child: TextField(
+                              child: TextField(maxLines: null,
+                                minLines: 1,
                                 onChanged: (String s) {
                                   Address2 = s;
                                 },
-                                decoration: InputDecoration(
+                                decoration: InputDecoration( hintMaxLines: 2,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(
@@ -422,7 +453,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                                 125, 143, 171, 1)),
                                     hintText: data["city"].length != 0
                                         ? data["city"]
-                                        : 'City*',
+                                        : 'City',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -454,7 +485,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                                 125, 143, 171, 1)),
                                     hintText: data["state"].length != 0
                                         ? data["state"]
-                                        : 'State*',
+                                        : 'State',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -486,7 +517,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                                 125, 143, 171, 1)),
                                     hintText: data["country"].length != 0
                                         ? data["country"]
-                                        : 'Country*',
+                                        : 'Country',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -518,9 +549,41 @@ class _Edit_profileState extends State<Edit_profile> {
                                                 125, 143, 171, 1)),
                                     hintText: data["zipcode"].length != 0
                                         ? data["zipcode"]
-                                        : 'zipcode*',
+                                        : 'Zipcode',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(left: 10, right: 10),
+                              child: TextField(  maxLines: null,
+                                minLines: 1,
+                                onChanged: (String s) {
+                              location=s;
+                                },
+                                decoration: InputDecoration( hintMaxLines: 2,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    hintStyle: data["location"].length != 0
+                                        ? TextStyle(
+                                        color:
+                                        Colors.black.withOpacity(0.7))
+                                        : TextStyle(
+                                        color: Color.fromRGBO(
+                                            125, 143, 171, 1)),
+                                    hintText: data["location"].length != 0
+                                        ? data["location"]
+                                        : 'Location',
+                                    fillColor:
+                                    Color.fromRGBO(248, 248, 248, 1)),
                               ),
                             ),
                             SizedBox(height: 10),
@@ -568,7 +631,8 @@ class _Edit_profileState extends State<Edit_profile> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
-                              child: TextField(enabled: false,
+                              child: TextField(
+                                enabled: false,
                                 onChanged: (String s) {
                                   phone2 = s;
                                 },
@@ -599,7 +663,7 @@ class _Edit_profileState extends State<Edit_profile> {
 
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 10, right: 10),
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: TextField(
                                 onChanged: (String s) {
                                   phone2 = s;
@@ -615,16 +679,16 @@ class _Edit_profileState extends State<Edit_profile> {
                                     filled: true,
                                     hintStyle: data["phone2"].length != 0
                                         ? TextStyle(
-                                        color:
-                                        Colors.black.withOpacity(0.7))
+                                            color:
+                                                Colors.black.withOpacity(0.7))
                                         : TextStyle(
-                                        color: Color.fromRGBO(
-                                            125, 143, 171, 1)),
+                                            color: Color.fromRGBO(
+                                                125, 143, 171, 1)),
                                     hintText: data["phone2"].length != 0
                                         ? data["phone2"]
                                         : 'Secondary mobile number',
                                     fillColor:
-                                    Color.fromRGBO(248, 248, 248, 1)),
+                                        Color.fromRGBO(248, 248, 248, 1)),
                               ),
                             ),
 
@@ -696,7 +760,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                                 125, 143, 171, 1)),
                                     hintText: data["linkedinlink"].length != 0
                                         ? data["linkedinlink"]
-                                        : 'linkedin',
+                                        : 'Linkedin',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -874,7 +938,9 @@ class _Edit_profileState extends State<Edit_profile> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
-                              child: TextField(
+                              child: TextField(onChanged: (String s){
+                                website=s;
+                              },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -884,10 +950,16 @@ class _Edit_profileState extends State<Edit_profile> {
                                       ),
                                     ),
                                     filled: true,
-                                    hintStyle: TextStyle(
+                                    hintStyle: data["website"].length != 0
+                                        ? TextStyle(
                                         color:
-                                            Color.fromRGBO(125, 143, 171, 1)),
-                                    hintText: "Any other social links",
+                                        Colors.black.withOpacity(0.7))
+                                        : TextStyle(
+                                        color: Color.fromRGBO(
+                                            125, 143, 171, 1)),
+                                    hintText: data["website"].length != 0
+                                        ? data["website"]
+                                        : 'Personal website',
                                     fillColor:
                                         Color.fromRGBO(248, 248, 248, 1)),
                               ),
@@ -972,7 +1044,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                     children: [
                                       ppuploaded2
                                           ? Text(
-                                              "  brochure   uploaded",
+                                              "  brochure uploaded",
                                               style: TextStyle(
                                                   color: Colors.green),
                                             )
@@ -1032,7 +1104,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                     "instagramlink": instagramlink,
                                     "skypelink": skypelink,
                                     "youtubelink": youtubelink,
-                                    "about": " "
+                                    "website": website
                                   };
 
                                   //  print(datatosend);
@@ -1077,7 +1149,7 @@ class _Edit_profileState extends State<Edit_profile> {
                                       MaterialPageRoute(
                                           builder: (context) => Username()));
                                 },
-                                color: Colors.red.withOpacity(0.75),
+                                color: Color.fromRGBO(255,236,232,1),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0)),
@@ -1087,13 +1159,14 @@ class _Edit_profileState extends State<Edit_profile> {
                                   width: 100,
                                   child: Center(
                                       child: Icon(
-                                          Icons.power_settings_new_rounded)),
+                                          Icons.power_settings_new_rounded,color: Color.fromRGBO(254, 110, 76,1),)),
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
+                      SizedBox(height: 25,),
                     ],
                   ),
                 ))
@@ -1127,7 +1200,7 @@ class _Edit_profileState extends State<Edit_profile> {
         setState(() {
           firstname = data["first_name"] ?? " ";
           lastname = data["last_name"] ?? " ";
-          company = data["country"] ?? " ";
+          company = data["company"] ?? " ";
           jobtitle = data["job_title"] ?? " ";
           Address1 = data["address_line1"] ?? " ";
           Address2 = data["address_line2"] ?? " ";
@@ -1137,7 +1210,7 @@ class _Edit_profileState extends State<Edit_profile> {
           email2 = data["email2"] ?? " ";
           phone2 = data["phone2"] ?? " ";
           state = data["state"] ?? " ";
-          country = data["first_name"] ?? " ";
+          country = data["country"] ?? " ";
           zipcode = data["zipcode"] ?? " ";
           location = data["location"] ?? " ";
 
@@ -1149,7 +1222,7 @@ class _Edit_profileState extends State<Edit_profile> {
           youtubelink = data["youtubelink"] ?? " ";
           website = data["website"] ?? " ";
 
-          about = data["about"] ?? " ";
+
 
           email = data["email"];
 
@@ -1198,7 +1271,28 @@ class _Edit_profileState extends State<Edit_profile> {
             'Accept': 'application/json',
           },
           body: jsonEncode(datatosend));
-      print(response.body);
+      print(response.statusCode);
+
+    if(response.statusCode!=200&&!ppuploaded&&!ppuploaded2){
+      c1=1;
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          content: const Text('Error saving the changes'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, ' Try again'),
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Color(0xff9AC9C2)),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
       if (ppuploaded) {
         final imageBytes = await imageFile.readAsBytes();
@@ -1214,7 +1308,24 @@ class _Edit_profileState extends State<Edit_profile> {
         if (response.statusCode == 200) {
           print('Image uploaded successfully');
         } else {
-          print('Failed to upload image');
+          c2=1;
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              content: const Text('Error uploading the picture'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, ' Try again'),
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(color: Color(0xff9AC9C2)),
+                  ),
+                ),
+              ],
+            ),
+          );
         }
       }
 
@@ -1232,47 +1343,50 @@ class _Edit_profileState extends State<Edit_profile> {
         if (response.statusCode == 200) {
           print('brochure_file uploaded successfully');
         } else {
-          print('brochure_file to upload image');
+          c3=1;
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              content: const Text('Error uploading the brochure'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, ' Try again'),
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(color: Color(0xff9AC9C2)),
+                  ),
+                ),
+              ],
+            ),
+          );
         }
       }
+if(c1==0&&c2==0&&c3==0){
 
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          content: const Text('Changes saved sucessfully'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Color(0xff9AC9C2)),
-              ),
-            ),
-          ],
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      shape:
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      content: const Text('Changes saved sucessfully'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text(
+            'OK',
+            style: TextStyle(color: Color(0xff9AC9C2)),
+          ),
         ),
-      );
+      ],
+    ),
+  );
+}
     } catch (e) {
       print(e.toString());
 
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          content: const Text('Endo scene ind machane'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Color(0xff9AC9C2)),
-              ),
-            ),
-          ],
-        ),
-      );
+
     }
     // setState(() {
     //   flag=false;

@@ -29,9 +29,10 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <title>nfc_card</title>
+  <title>Iris Cards</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
@@ -40,8 +41,29 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+
+  <style>
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex; /* Default Axis is X*/
+      justify-content: center; /* Main Axis */
+      align-items: center; /* Cross Axis */
+    }
+    .indicator{
+      width: 4vw;
+    }
+</style>
+
 </head>
-<body>
+<body style="overflow: hidden">
+<div id="loading_indicator" class="container">
+  <img class="indicator" src="./assets/loading.gif" />
+</div>
+<script type="text/javascript">
+    window.flutterWebRenderer = "html";
+  </script>
+
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -56,5 +78,16 @@
       });
     });
   </script>
+
+<script>
+  window.onload = function () {
+        setTimeout(function () {
+          var loadingIndicator =                 document.getElementById("loading_indicator");
+          if (loadingIndicator) {
+            loadingIndicator.remove();
+          }
+        }, 10000);
+};
+</script>
 </body>
 </html>
