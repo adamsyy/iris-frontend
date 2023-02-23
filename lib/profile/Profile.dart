@@ -149,17 +149,21 @@ var url;
                 children: [
                   SizedBox(height: 65),
                   //image of the profile picture with rounded corners
+
                   Container(
                     height: 100,
                     width: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       image: DecorationImage(
-                        image:data["profile_pic"]!=null ?NetworkImage(data["profile_pic"]+'/'):NetworkImage("https://i.ibb.co/jr8RFT5/default-profile-pic.png"),
+                        image: data["profile_pic"] != null
+                            ? NetworkImage(data["profile_pic"] + '/?v=' + DateTime.now().millisecondsSinceEpoch.toString())
+                            : NetworkImage("https://i.ibb.co/jr8RFT5/default-profile-pic.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
+
 
                   SizedBox(height: 20),
                   Text(data["first_name"]+" "+data["last_name"]??" ",

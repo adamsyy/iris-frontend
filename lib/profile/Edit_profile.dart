@@ -251,7 +251,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   firstname = s;
-                                },
+                                },  onTap: () {
+                                setState(() {
+                                  data['first_name'] = '';
+                                });
+                              },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -277,6 +281,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   lastname = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['last_name'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -304,6 +313,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   company = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['company'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -336,6 +350,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   jobtitle = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['job_title'] =  ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -370,6 +389,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   Address1 = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['address_line1'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration( hintMaxLines: 2,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -403,6 +427,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   Address2 = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['address_line2'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration( hintMaxLines: 2,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -434,6 +463,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   city = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['city'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -467,6 +501,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   state = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['state'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -498,6 +537,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   country = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['country'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -531,6 +575,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   zipcode = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['zipcode'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -562,6 +611,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 minLines: 1,
                                 onChanged: (String s) {
                               location=s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['location'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration( hintMaxLines: 2,
                                     border: OutlineInputBorder(
@@ -603,6 +657,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   phone = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['phone'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -636,6 +695,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   phone2 = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['email'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -667,6 +731,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   phone2 = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['phone2'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -700,6 +769,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   email2 = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['email2'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -742,6 +816,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   linkedinlink = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['linkedinlink'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -774,6 +853,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   twitterlink = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['twitterlink'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -808,6 +892,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   facebooklink = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['facebooklink'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -841,6 +930,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   instagramlink = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['instagramlink'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -873,6 +967,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(
                                 onChanged: (String s) {
                                   skypelink = s;
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    data['skypelink'] = ' ';
+                                  });
                                 },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -909,6 +1008,11 @@ class _Edit_profileState extends State<Edit_profile> {
                                 onChanged: (String s) {
                                   youtubelink = s;
                                 },
+                                onTap: () {
+                                  setState(() {
+                                    data['youtubelink'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -941,6 +1045,11 @@ class _Edit_profileState extends State<Edit_profile> {
                               child: TextField(onChanged: (String s){
                                 website=s;
                               },
+                                onTap: () {
+                                  setState(() {
+                                    data['website'] = ' ';
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -1273,7 +1382,7 @@ class _Edit_profileState extends State<Edit_profile> {
           body: jsonEncode(datatosend));
       print(response.statusCode);
 
-    if(response.statusCode!=200&&!ppuploaded&&!ppuploaded2){
+    if(response.statusCode!=200){
       c1=1;
       showDialog<String>(
         context: context,

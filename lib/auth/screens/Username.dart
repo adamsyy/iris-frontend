@@ -14,6 +14,8 @@ late String username;
 late String password;
 Controller controller = Get.put(Controller());
 int check=0;
+String hint_username="Username";
+String hint_password="Password";
 
 class Username extends StatefulWidget {
   @override
@@ -140,7 +142,12 @@ print(response.body);
                       child: TextField(  textAlign: TextAlign.center,onChanged: (String s){
                         username=s;
                       },
-                          decoration: InputDecoration(hintText: 'Username',
+                          onTap: (){
+                            setState(() {
+                              hint_username="";
+                            });
+                          },
+                          decoration: InputDecoration(hintText: hint_username,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
@@ -165,7 +172,13 @@ print(response.body);
                       child: TextField( obscureText: true, textAlign: TextAlign.center,onChanged: (String s){
                         password=s;
                       },
-                          decoration: InputDecoration(hintText: 'Password',
+                          onTap: (){
+                            setState(() {
+                           hint_password="";
+                            });
+
+                          },
+                          decoration: InputDecoration(hintText: hint_password,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
